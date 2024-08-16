@@ -1,0 +1,122 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bienvenido</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <ion-card>
+      <ion-card-header>
+        Aguaje:
+      </ion-card-header>
+      <ion-card-content>
+      <ion-select interface="popover" placeHolder="Seleccionar" [(ngModel)]="objeto.idaguaje" (ngModelChange)="onAguajeSelected()"  >
+        <ion-select-option *ngFor="let item of listAguaje" [value]="item.id">{{ item.descripcion }}  No. {{ item.numeroaguaje }}</ion-select-option>
+      </ion-select>                 
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+    <ion-grid>
+      <ion-row style="height: auto;">
+        <ion-col>
+          <ion-card class="left-content" style="height: 100%;">
+            <ion-card-header>
+              Información de Aguaje
+            </ion-card-header>
+            <ion-card-content>
+              <div class="divgrid">
+                <ion-grid class="ion-margin">
+                  <ion-row>
+                    <ion-col size="1.2" class="ion-text-center"   >Días <br/>Aguaje</ion-col> 
+                    <ion-col size="2" class="ion-text-center" >Fecha<br/> Despacho</ion-col>
+                    <ion-col size="1.5" class="ion-text-center"   >% Part</ion-col>
+                    <ion-col size="2" class="ion-text-center"   >Lb.<br/> Programadas</ion-col>
+                    <ion-col size="1.8" class="ion-text-center"  >Bines<br/> movilizados</ion-col>
+                    <ion-col size="2" class="ion-text-center"   >Lb.<br/>Remitidas.</ion-col>
+                    <ion-col size="1.5" class="ion-text-center"  >%Efectividad</ion-col>
+                  </ion-row>
+                  <ion-row *ngFor="let item of rowData; let i=index">
+                    <ion-col size="1.2" class="ion-text-center"   >{{ item.id }}</ion-col> 
+                    <ion-col size="2" class="ion-text-center" >{{ item.fechadespacho }}</ion-col>
+                    <ion-col size="1.5" class="ion-text-center"   >{{ item.participacion }}</ion-col>
+                    <ion-col size="2" class="ion-text-center"   >{{ item.programadas }}</ion-col>
+                    <ion-col size="1.8" class="ion-text-center"  >{{ item.bines_movilizados }}</ion-col>
+                    <ion-col size="2" class="ion-text-center"   >{{ item.remitidas }}</ion-col>
+                    <ion-col size="1.5" class="ion-text-center"  > {{ item.efectividad }}</ion-col>
+                        
+                   </ion-row>
+                   <ion-row  style="background-color:rgb(192, 235, 192)" *ngFor="let item of rowData;let isFirst = first; let i=index">
+                    <ng-container *ngIf="i === 0">
+                    <ion-col size="1.2" class="ion-text-center"   >Acum.</ion-col> 
+                    <ion-col size="2" class="ion-text-center" ></ion-col>
+                    <ion-col size="1.5" class="ion-text-center"   ></ion-col>
+                    <ion-col size="2" class="ion-text-center"   >{{ item.programadas_aguaje }}</ion-col>
+                    <ion-col size="1.8" class="ion-text-center"  >{{ item.tbines }}</ion-col>
+                    <ion-col size="2" class="ion-text-center"   >{{ item.tremitidas }}</ion-col>
+                    <ion-col size="1.5" class="ion-text-center"  > {{ item.tefectividad }}</ion-col>
+                  </ng-container>
+                   </ion-row>
+            
+                </ion-grid>
+              </div> 
+            
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col>
+          <ion-card class="left-content">
+            <ion-card-header>
+              Libras Programadas Vs Libras Remitidas
+            </ion-card-header>
+            <ion-card-content>
+              <canvas id="modelsChart" ></canvas>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <canvas id="myChartLineHieleras"></canvas>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle>Numero de despachos por</ion-card-subtitle>
+              <ion-card-title>PUERTOS</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div style="height: 200px;text-align: center;">
+                <canvas style="text-align: center;" id="myChartPiePuertos"></canvas>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      
+        <ion-col>
+          <canvas id="myChartBarClientes"></canvas>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle>Numero de libras por</ion-card-subtitle>
+              <ion-card-title>PROVEEDORES</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div style="height: 200px;text-align: center;">
+                <canvas  id="myChartPieProveedor"></canvas>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+</ion-content>

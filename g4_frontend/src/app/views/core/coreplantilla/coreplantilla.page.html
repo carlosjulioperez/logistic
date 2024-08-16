@@ -1,0 +1,159 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>CRUD TM</ion-title>
+    <ion-buttons slot="end">
+      <!--  *ngIf="seleccionado != null" 
+      <ion-button color="primary" (click)="guardar()"   >
+        <ion-icon slot="icon-only" name="save"></ion-icon>
+      </ion-button>  --> 
+      <ion-button   color="primary" (click)="getDatos()" >
+        <ion-icon slot="start" name="sync-circle"></ion-icon>
+        Actualizar
+      </ion-button>  
+      <ion-button  color="secondary" (click)="nuevo()" >
+        <ion-icon slot="start" name="document"></ion-icon>
+        Nuevo
+      </ion-button>  
+      <ion-button   color="primary" (click)="guardar()" >
+        <ion-icon slot="start" name="save"></ion-icon>
+        GUARDAR
+      </ion-button>  
+      <ion-button color="success" (click)="excelExportar()" >
+        <ion-icon slot="start" name="document-text"></ion-icon>
+          EXPORTAR
+      </ion-button>
+     
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-card>
+    <ion-grid>
+      <ion-col size-md="6"  size="6" size-lg="12" >  <!--  size-lg="4" size-md="4" size-sm="6" size="12"    -->
+        <ion-row   >
+          <ion-col class="ion-no-padding" size-sm="10" size-md="4"  size="4" size-lg="4" >
+
+            <ion-card class="headercoreplantilla"  >
+              <ion-card-header>
+                <ion-card-title>TITULO {{ objetoPlantillatm.descripcion }}</ion-card-title>
+              </ion-card-header>
+              <ion-row >
+                <ion-col class="ion-no-padding">
+                  <ion-item>
+                    <ion-label position="floating" >Elegir Maestro</ion-label>  <!--  {{ item.nombretm }} labelPlacement="floating" aria-label="Elegir Maestro."  -->
+                    <ion-select   interface="popover" placeHolder="Seleccionar"  [(ngModel)]="objetoPlantillatm" (ionChange)="onMaestroSelected()" >
+                      <ion-select-option *ngFor="let item of listaMaestros" [value]="item"  slot="start" aria-label="item.nombretm" >{{ item.nombretm }}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- 
+              <ion-row >
+                <ion-col class="ion-no-padding">
+                  <ion-item>
+                    <ion-label > TITULO {{ objetoPlantillatm.descripcion }}</ion-label>
+                  </ion-item>
+                </ion-col>  
+              </ion-row>
+              -->
+              <ion-row >  <!--  *ngIf="!mostrarcajaseditar"  <p *ngIf=" tran.tranType == 'R'" > You have redeemed  {{tran.pointsRedeemed}} points.  </p>   *ngIf="item.idtipocampo == 2 "-->
+                <ion-col class="ion-no-padding">                 
+                    <ion-list *ngFor="let item of listaMaestroDetalles"  >
+                        <ion-item  *ngIf="item.idtipocampo === 2 && item.mostrarcrud"  >
+                          <ion-label position="floating"  > {{ item.etiquetaforma }} </ion-label>             
+                          <ion-input [(ngModel)]="item.valordefecto" labelPlacement="floating"  ></ion-input>
+                        </ion-item>
+                        <ion-item  *ngIf="item.idtipocampo === 3 && item.mostrarcrud"  >
+                          <ion-label position="floating"  > {{ item.etiquetaforma }} </ion-label>             
+                          <ion-input [(ngModel)]="item.valordefecto" type="number" labelPlacement="floating" ></ion-input>
+                        </ion-item>
+                        <ion-item  *ngIf="item.idtipocampo === 4 && item.mostrarcrud"  >
+                          <ion-label position="floating"  > {{ item.etiquetaforma }} </ion-label>             
+                          <ion-input [(ngModel)]="item.valordefecto" type="date" labelPlacement="floating" ></ion-input>
+                        </ion-item>
+                        <ion-item  *ngIf="item.idtipocampo === 6 && item.mostrarcrud" >
+                          <ion-label position="floating" > {{ item.etiquetaforma }}  </ion-label>  
+                          <ion-select  interface="popover"   placeHolder="Seleccionar"  [(ngModel)]="item.valordefecto" label-placement="floating" >
+                            <ion-select-option *ngFor="let item2 of item.listaidtipocampo6" [value]="item2.id"  >{{ item2.descripcion }}</ion-select-option>
+                          </ion-select>
+                        </ion-item>
+                    </ion-list>  
+                    <ion-list *ngIf="loaded">
+                      <ion-item >
+                        <ion-skeleton-text [animated]="true" style="width: 10%;"></ion-skeleton-text>
+                        <ion-skeleton-text [animated]="true" style="width: 90%;"></ion-skeleton-text>
+                      </ion-item>
+                      <ion-item >
+                        <ion-skeleton-text [animated]="true" style="width: 10%;"></ion-skeleton-text>
+                        <ion-skeleton-text [animated]="true" style="width: 90%;"></ion-skeleton-text>
+                      </ion-item>
+                      <ion-item >
+                        <ion-skeleton-text [animated]="true" style="width: 10%;"></ion-skeleton-text>
+                        <ion-skeleton-text [animated]="true" style="width: 90%;"></ion-skeleton-text>
+                      </ion-item>
+                      <ion-item >
+                        <ion-skeleton-text [animated]="true" style="width: 10%;"></ion-skeleton-text>
+                        <ion-skeleton-text [animated]="true" style="width: 90%;"></ion-skeleton-text>
+                      </ion-item>
+                      <ion-item >
+                        <ion-skeleton-text [animated]="true" style="width: 10%;"></ion-skeleton-text>
+                        <ion-skeleton-text [animated]="true" style="width: 90%;"></ion-skeleton-text>
+                      </ion-item>
+                    </ion-list>                 
+                </ion-col>  
+              </ion-row>
+             <!--  
+              <ion-row >
+                <ion-col class="ion-no-padding">   
+                  <ion-item>   
+                  <ion-button   color="primary" (click)="guardar()" >
+                    <ion-icon slot="start" name="save"></ion-icon>
+                    GUARDAR
+                  </ion-button>  
+                  <ion-button   color="primary" (click)="imprimir()" >
+                    <ion-icon slot="start" name="print"></ion-icon>
+                    IMPRIMIR
+                  </ion-button>  
+                </ion-item>        
+                </ion-col>
+              </ion-row>
+              -->
+            </ion-card>
+          </ion-col> <!-- FIN  BLOQUE 1 -->
+        
+          <ion-col class="ion-no-padding" size-sm="10" size-md="8"  size="8" size-lg="8"  >
+            <ion-row style="height: 100%;">
+              <ion-col>                 
+                <ion-searchbar animated debounce="300" placeholder="Digite informacion para filtrar..." (ionChange)="updateFilter($event)" (ionClear)="updateFilter($event)"></ion-searchbar>
+                <div id="container">
+                <ag-grid-angular    
+                  style="width: 100%; height: 500px;" 
+                  class="ag-theme-alpine"
+                  [rowData]="rowData"
+                  [columnDefs]="columnDefs"   
+                  [defaultColDef]="defaultColDef"
+                  [pagination]="true"     
+                  [overlayLoadingTemplate]="overlayLoadingTemplate"
+                  [animateRows]="true"
+                  (gridReady)="onGridReady($event)"> 
+          
+                </ag-grid-angular>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-col> <!-- FIN  BLOQUE 2 -->
+        </ion-row>
+      </ion-col>
+    </ion-grid>   
+
+  </ion-card>  
+
+
+ 
+</ion-content>

@@ -1,0 +1,68 @@
+<ion-app>
+  <!-- <ion-split-pane contentId="main-content"> -->
+    <ion-menu menuId="main-menu" contentId="main-content"   > <!-- type="overlay"-->
+      <ion-content>
+        <!-- 
+        <ion-list id="inbox-list">
+        </ion-list>  
+
+          <ion-list-header>Inbox</ion-list-header>
+          <ion-note>hi@ionicframework.com</ion-note>
+        --> 
+        <div class="menu-header-bg" >
+          Menu
+        </div>
+        <div class="header-content" >
+          <img src="../assets/img/avatar.png" >
+          <ion-label>
+            <h2>{{username}}</h2>
+            <p>{{usuario}}</p>             
+            <ion-button fill="clear" color="warning" (click)="cerrarSesion()">
+              Salir <ion-icon slot="icon-only" name="log-out"></ion-icon>
+            </ion-button>
+          </ion-label>
+           
+        </div>
+
+
+         
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item class="active"  [routerLink]="[p.url]"  detail="true" routerLinkActive="selected">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+           
+
+          <!--
+          <ion-list id="labels-list" class="menu-items" lines="nones" *ngFor="let p of appPages; let i = index" >
+  
+            <ion-item lines="none" class="active" routerDirection="root" [routerLink]="[p.url]"  detail="false" routerLinkActive="selected">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>  
+            </ion-item>
+          </ion-list>
+        -->
+
+      <!-- 
+        <ion-list id="labels-list" class="menu-items" lines="nones" >
+          <ion-list-header>Labels</ion-list-header>
+
+          <ion-item *ngFor="let label of labels" lines="none" >
+            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-label>{{ label }}</ion-label>
+          </ion-item>
+        </ion-list>
+      -->  
+
+      <div class="footer">
+        <div class="footer-app-version">
+            Version 2.04.8
+        </div>
+      </div>
+        
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  <!-- </ion-split-pane> -->
+</ion-app>

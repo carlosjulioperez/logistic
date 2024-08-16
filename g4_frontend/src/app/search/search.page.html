@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{titulo}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="multiple" color="success" (click)="guardar()">
+        <ion-icon slot="icon-only" name="checkmark-circle"></ion-icon>
+      </ion-button>
+      <ion-button color="primary" (click)="modalCtrl.dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar animated debounce="300" [(ngModel)]="filtro" placeholder="Digite informacion a buscar..." (ionChange)="updateFilter($event)" (ionClear)="updateFilter($event)" ></ion-searchbar>
+  </ion-toolbar> <!--  (ionChange)="filtrar()"  -->
+</ion-header>
+
+<ion-content>
+  
+  <ion-list>
+    <ion-item *ngIf="datos.length == 0" lines="none">
+      <ion-label>No existe informacion</ion-label>
+      <ion-icon name="search" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item *ngFor="let item of datos" (click)="seleccionar(item)">
+      <ion-label class="ion-text-wrap" *ngFor="let cab of campos">{{ item[cab] }}</ion-label>
+      <ion-checkbox slot="start" [(ngModel)]="item.check" [disabled]="item.readonly != null && item.readonly"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>

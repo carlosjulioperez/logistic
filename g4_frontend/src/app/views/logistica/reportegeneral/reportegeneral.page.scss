@@ -1,0 +1,34 @@
+.search-card {
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  ion-item {
+    --padding-start: 0;
+  }
+  
+  ion-label {
+    font-weight: bold;
+  }
+  
+  ion-button {
+    margin-top: 20px;
+  }
+
+
+  .popover-contento {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    width: auto !important; //var(--width);
+    min-width: var(--min-width);
+    max-width: var(--max-width);
+    height: var(--height);
+    min-height: var(--min-height);
+    max-height: var(--max-height);
+    background: var(--background);
+    box-shadow: var(--box-shadow);
+    overflow: auto;
+    z-index: 10;
+  }
+

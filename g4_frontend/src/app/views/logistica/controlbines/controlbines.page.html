@@ -1,0 +1,150 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="color:darkblue;font-weight: bold;" >Registro y Control de Bines con Hielo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="getDatosDetalle()" [disabled]="!idplanificaciondetalle">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button> 
+      <ion-button color="success" (click)="excelExportar()" >
+        <ion-icon slot="start" name="document-text"></ion-icon>
+          EXPORTAR
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="4" size-lg="4">
+        <ion-card>
+          <ion-card-content>
+            <div class="divcard1">
+              <div class="bloqueTag">
+                <div class="bloqueTagIcon">
+                  <ion-icon name="calendar" color="primary"></ion-icon>
+                </div>
+                <span>Seleccione No. de Aguaje :</span> 
+              </div>
+              <div class="bloqueTag">
+                <ion-label class="ion-text-wrap" style="font-size: 11px;"  >{{ objeto.aguaje }} </ion-label>
+                <ion-button style="margin-left: 10px;"  (click)="buscarAguaje()" size="small" slot="end" fill="outline" color="primary">
+                  <ion-icon slot="icon-only" name="search"></ion-icon>
+                </ion-button>               
+              </div>
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="4" size-lg="4">
+        <ion-card>
+          <ion-card-content>
+            <div class="divcard1">
+              <div class="bloqueTag">
+                <div class="bloqueTagIcon">
+                  <ion-icon name="calendar" color="primary"></ion-icon>
+                </div>
+                <span>Fecha Despacho :</span> 
+              </div>
+              <div class="bloqueTag"> 
+                <ion-label class="ion-text-wrap" style="font-size: 11px;"  >{{ fechadespachofiltro }} </ion-label>
+                <ion-button style="margin-left: 10px;"  (click)="buscarFechaDespacho()" size="small" slot="end" fill="outline" color="primary">
+                  <ion-icon slot="icon-only" name="search"></ion-icon>
+                </ion-button>      
+              </div>
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="4" size-lg="4">
+        <ion-card>
+          <ion-card-content>
+            <div class="divcard1">
+              <div class="bloqueTag">
+                <div class="bloqueTagIcon">
+                  <ion-icon name="calendar" color="primary"></ion-icon>
+                </div>
+                <span>Productor :</span> 
+              </div>
+              <div class="bloqueTag"> 
+                <ion-label class="ion-text-wrap" style="font-size: 11px;"  >{{ productorlabel }} </ion-label>
+                <ion-button style="margin-left: 10px;"  (click)="buscarProductor()" size="small" slot="end" fill="outline" color="primary">
+                  <ion-icon slot="icon-only" name="search"></ion-icon>
+                </ion-button>      
+              </div>
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+ 
+    <ion-row>
+      <ion-col >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle style="font-weight: bold;" >Materiales a Enviar</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col> <!--  class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="12" size-lg="12"  -->
+                <div id="container"> <!--  [modules]="modules"  style="height: 100%;"  [pinnedBottomRowData]="bottomData"   -->
+                  <ag-grid-angular #agGridDatos   
+                    style="width: 100%; height: 500px;" 
+                    class="ag-theme-alpine"
+                    [gridOptions]="gridOptions"
+                    
+                    [rowData]="rowData"        
+                    [columnDefs]="columnDefs"   
+                    [defaultColDef]="defaultColDef"
+                    [pagination]="true"  
+                    [frameworkComponents]="frameworkComponents"   
+                    [overlayLoadingTemplate]="overlayLoadingTemplate"              
+                    [animateRows]="true"
+                                  
+                    (cellValueChanged)="onCellValueChanged($event)"
+                    (rowEditingStarted)="onRowEditingStarted($event)"
+                    (rowEditingStopped)="onRowEditingStopped($event)"
+                    (cellEditingStarted)="onCellEditingStarted($event)"
+                    (cellEditingStopped)="onCellEditingStopped($event)"
+                    (gridReady)="onGridReady($event)"
+                    [overlayNoRowsTemplate]="noRowsTemplate"> 
+          
+                  </ag-grid-angular>
+                </div>
+              </ion-col>
+            </ion-row>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+
+    <!-- 
+
+      <div class="divcard">
+        <div class="bloqueTag">
+          <div class="bloqueTagIcon">
+            <ion-icon name="calendar" color="primary"></ion-icon>
+          </div>
+          <span>OPL :</span> 
+        </div>
+        <div class="bloqueTag">  
+          <ion-select interface="popover" placeHolder="Seleccionar"  [(ngModel)]="idoperadorlogistico"  >
+            <ion-select-option *ngFor="let item of listaoperadorlogistico" [value]="item.id">{{ item.operadorlogisticolabel }} </ion-select-option>
+          </ion-select>   
+        </div>
+
+      </div>
+
+    -->
+   
+</ion-content>

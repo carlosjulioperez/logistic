@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" >
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Opciones de Reportes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="search-card">
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Fecha de inicio:</ion-label>
+        <ion-input value="{{ fechaInicio | date: 'dd/MM/yyyy' }}" id="fechacapacitaciondesde" class="ion-text-end"></ion-input>
+        <ion-popover  trigger="fechacapacitaciondesde" size="auto" >
+          <ng-template  >
+            <ion-datetime locale="es-ES" displayFormat="MMMM D, YYYY" pickerFormat="MMMM D, YYYY" 
+             [(ngModel)]="fechaInicio" presentation="date"  [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar"  > <span slot="title">Selecione una fecha inicial</span> </ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Fecha de fin:</ion-label>
+        <!-- <ion-datetime display-format="DD/MM/YYYY" [(ngModel)]="fechaFin"></ion-datetime> -->
+        <ion-input value="{{ fechaFin | date: 'dd/MM/yyyy' }}" id="fechahasta" class="ion-text-end"></ion-input>
+        <ion-popover  trigger="fechahasta" size="auto" >
+          <ng-template  >
+            <ion-datetime locale="es-ES" displayFormat="MMMM D, YYYY" pickerFormat="MMMM D, YYYY" 
+             [(ngModel)]="fechaFin" presentation="date"  [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar"  > <span slot="title">Selecione una fecha final</span> </ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+
+
+
+      <ion-button expand="block" color="primary" (click)="buscarReporte()">Programacion Despachos General</ion-button>
+    </ion-card-content>
+  </ion-card>  
+</ion-content>

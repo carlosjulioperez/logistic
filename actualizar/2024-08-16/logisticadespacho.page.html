@@ -1,0 +1,250 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="color:darkblue;font-weight: bold;">Coordinacion y Planificacion de Despacho</ion-title>
+    <ion-buttons slot="end">
+      <!--
+      <ion-button color="primary" (click)="imprimir()" >    
+        <ion-icon slot="start" name="document-text"></ion-icon>
+          Reporte
+      </ion-button>  -->
+      <ion-button color="success" (click)="excelExportar()" > <!--  -->
+        <ion-icon slot="start" name="document-text"></ion-icon>
+          Excel
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+        <ion-col class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="4" size-lg="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle style="font-weight: bold;" >Parametros busqueda</ion-card-subtitle>
+            </ion-card-header>
+          
+            <ion-card-content>
+              <div class="divcard">
+                <div class="bloqueTag">
+                  <span>Seleccione No. de Aguaje :</span> 
+                </div>
+                <div class="bloqueTag">
+                  <ion-select interface="popover" placeHolder="Seleccionar" [(ngModel)]="objeto.idaguaje" (ngModelChange)="onAguajeSelected()"  >
+                    <ion-select-option *ngFor="let item of listAguaje" [value]="item.id">{{ item.descripcion }}  No. {{ item.numeroaguaje }}</ion-select-option>
+                  </ion-select>                 
+                </div>
+              </div>
+              <div class="divcard">
+                <div class="bloqueTag">
+                  <span>Fecha de Programacion :</span> 
+                </div>
+                <div class="bloqueTag" >
+                  <!-- 
+                  <ion-input value="{{ objeto.fechadespacho | date: 'dd/MM/yyyy' }}" id="fechacapacitaciondesde" class="ion-text-end"></ion-input>
+                  <ion-popover  trigger="fechacapacitaciondesde" size="auto">
+                    <ng-template>
+                      <ion-datetime locale="es-ES" displayFormat="MMMM D, YYYY" pickerFormat="MMMM D, YYYY"
+                       [(ngModel)]="objeto.fechadespacho" presentation="date" > </ion-datetime>
+                    </ng-template>
+                  </ion-popover>-->
+                  <ion-label class="ion-text-wrap" style="font-size: 11px;"  >{{ fechadespachofiltro }} </ion-label>
+                  <ion-button style="margin-left: 10px;"  (click)="buscarFechaDespacho()" size="small" slot="end" fill="outline" color="primary">
+                    <ion-icon slot="icon-only" name="search"></ion-icon>
+                  </ion-button>   
+                </div>
+              </div>
+            </ion-card-content>
+             
+          </ion-card>
+        </ion-col>  
+        <ion-col class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="4" size-lg="4">
+          <ion-card>
+            <ion-card-content>
+              <div class="divcard1">
+                <div class="bloqueTag">
+                  <div class="bloqueTagIcon">
+                    <ion-icon name="scale" color="primary"></ion-icon>
+                  </div>
+                  <span>Total Libras Programadas :</span> 
+                </div>
+                <div class="bloqueTag">
+                  <ion-label class="ion-text-wrap" style="font-size: 14px;"  >{{currencyFormatterLabel(totalcabeceralibrasprogramadas)}} </ion-label>
+                  <!-- <ion-input value="{{ objetodetalle.fechamaterialescampo }}"   class="ion-text-end"></ion-input>  -->       
+                </div>
+              </div>
+              <div class="divcard1">
+                <div class="bloqueTag">
+                  <div class="bloqueTagIcon">
+                    <ion-icon name="scale" color="primary"></ion-icon>
+                  </div>
+                  <span>Total Libras Moviles :</span> 
+                </div>
+                <div class="bloqueTag">
+                  <ion-label class="ion-text-wrap" style="font-size: 14px;"  >{{currencyFormatterLabel(totalcabeceralibrasprogramadasmovil)}} </ion-label>
+                </div>
+              </div>
+              <div class="divcard1">
+                <div class="bloqueTag">
+                  <div class="bloqueTagIcon">
+                    <ion-icon name="cube" color="primary"></ion-icon>
+                  </div>
+                  <span>Total Bines :</span> 
+                </div>
+                <div class="bloqueTag">
+                  <ion-label class="ion-text-wrap" style="font-size: 14px;"  >{{currencyFormatterLabel(totalcabecerabines)}} </ion-label>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>    
+        </ion-col>
+        <ion-col class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="4" size-lg="4">
+          <ion-card>
+            <ion-card-content>
+              <div class="divcard1">
+                <div class="bloqueTag">
+                  <div class="bloqueTagIcon">
+                    <ion-icon name="ice-cream" color="primary"></ion-icon>
+                  </div>
+                  <span>Total Hielo :</span> 
+                </div>
+                <div class="bloqueTag">
+                  <ion-label class="ion-text-wrap" style="font-size: 14px;"  >{{currencyFormatterLabel(totalcabecerahielo)}} </ion-label>
+                </div>
+              </div>
+              <div class="divcard1">
+                <div class="bloqueTag">
+                  <div class="bloqueTagIcon">
+                    <ion-icon name="logo-medium" color="primary"></ion-icon>
+                  </div>
+                  <span>Total Metabisulfito :</span> 
+                </div>
+                <div class="bloqueTag">
+                  <ion-label class="ion-text-wrap" style="font-size: 14px;"  >{{currencyFormatterLabel(totalcabecerameta)}} </ion-label>
+                </div>
+              </div>
+              <div class="divcard1">
+                <div class="bloqueTag">
+                  <div class="bloqueTagIcon">
+                    <ion-icon name="apps" color="primary"></ion-icon>
+                  </div>
+                  <span>Total Sal :</span> 
+                </div>
+                <div class="bloqueTag">
+                  <ion-label class="ion-text-wrap" style="font-size: 14px;"  >{{currencyFormatterLabel(totalcabecerasal)}} </ion-label>
+                </div>
+              </div>
+
+            </ion-card-content>
+          </ion-card>    
+        </ion-col>
+
+      </ion-row> 
+ 
+       
+  </ion-grid>
+  <div class="divgrid">
+    <ion-grid class="ion-margin">
+      <ion-row>
+        <ion-col size="1" class="ion-text-center" >Cliente</ion-col>
+        <ion-col size="1" class="ion-text-center"   >Camaronera</ion-col> 
+        <ion-col size="1" class="ion-text-center" >Sector</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >Tipo</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >Piscina</ion-col>
+        <ion-col size="0.5" class="ion-text-center"  >Gramaje</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >Lib.<br/>Programdas.</ion-col>
+        <ion-col size="0.5" class="ion-text-center"  >Accion</ion-col>
+        <ion-col size="6.5" class="ion-text-center"  >Info.Transporte</ion-col> 
+      </ion-row>
+      <ion-row *ngFor="let item of listDetallePrograma; let i=index">
+        <ion-col size="1" class="ion-text-center" >{{ item.cliente }}</ion-col>
+        <ion-col size="1" class="ion-text-center"   >{{ item.proveedor }}</ion-col> 
+        <ion-col size="1" class="ion-text-center" >{{ item.sector }}</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >{{ item.tipoproceso }}</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >{{ item.piscina }}</ion-col>
+        <ion-col size="0.5" class="ion-text-center"  >{{ item.gramaje }}</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   > {{currencyFormatterLabel(item.cantidadprogramada)}}</ion-col>
+        <ion-col size="0.5" class="ion-text-center"  >  
+           <!--  <div class="divcard"> -->
+             <!--  <div class="bloqueTag">
+                <ion-button color="primary" size="small" (click)="ediacionItem(item)" >
+                  <ion-icon slot="icon-only" name="construct-outline"></ion-icon>                   
+                </ion-button>
+              </div> -->
+              <!-- 
+              <div class="bloqueTag">
+                <ion-button color="primary" size="small" (click)="excelExportar()" >
+                  <ion-icon slot="icon-only" name="add-circle"></ion-icon>                   
+                </ion-button>
+              </div> -->
+         <!--   </div>  -->
+         <ion-button color="primary" size="small" (click)="ediacionItem(item)" >
+          <ion-icon slot="icon-only" name="list-circle-outline"></ion-icon>                   
+         </ion-button>
+        </ion-col>
+        <ion-col size="6.5" class="ion-text-center" style="overflow-x: auto;" > <!-- style="overflow-x: auto;" -->
+          <table>
+            <thead>
+                <tr>
+                    <th width="2%" >Guia</th>
+                    <th width="8%" >Biologo</th>
+                    <th width="2%">Transporte</th>
+                    <th width="3%">Conductor</th>
+                    <th width="2%">Cedula</th>
+                    <th width="2%">Telefono</th>
+
+                    <th width="13%">Prov.Hielo</th>
+                    <th width="2%">Bines</th>
+                    <th width="2%">Conica</th>
+                    <th width="2%">Calada</th>
+                    <th width="2%">Hielo</th>                    
+                    <th width="2%">Meta</th>
+                    <th width="2%">Tipo</th>
+                    <th width="2%">Sal</th>
+                    <th width="2%">Libras.Movil</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let det of item.detallemoviles; let i=index" >
+                <tr>
+                    <td>{{det.numeroguia}}</td>
+                    <td>{{det.biologo}}</td>
+                    <td>{{det.transporte}}</td>
+                    <td style="font-size: 9px;">{{det.conductor}}</td>
+                    <td>{{det.cedula}}</td>
+                    <td>{{det.telefono}}</td>
+                    <td>{{det.proveedorhielo}}</td>
+                    <td>{{currencyFormatterLabel(det.bines)}}</td>
+                    <td>{{currencyFormatterLabel(det.conica)}}</td>
+                    <td>{{currencyFormatterLabel(det.calada)}}</td>
+                    <td>{{currencyFormatterLabel(det.hielo)}}</td>                    
+                    <td>{{currencyFormatterLabel(det.meta)}}</td>
+                    <td>{{det.tipometa}}</td>
+                    <td>{{currencyFormatterLabel(det.sal)}}</td>
+                    <td>{{currencyFormatterLabel(det.cantidadprogramada)}} </td>
+                </tr>
+                                
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="7">Totales </th>
+                    <th class="text-center">{{currencyFormatterLabel(item.totalbines)}}</th>
+                    <th class="text-center">{{currencyFormatterLabel(item.totalconica)}}</th>
+                    <th class="text-center">{{currencyFormatterLabel(item.totalcalada)}}</th>
+                    <th class="text-center">{{currencyFormatterLabel(item.totalhielo)}}</th>
+                    <th class="text-center">{{currencyFormatterLabel(item.totalmeta)}}</th>
+                    <th class="text-center"></th>
+                    <th class="text-center">{{currencyFormatterLabel(item.totalsal)}}</th>
+                    <th class="text-center">{{currencyFormatterLabel(item.totalcantidadprogramada)}}</th>
+                </tr>
+            </tfoot>
+        </table>
+
+        </ion-col> 
+      </ion-row>
+    </ion-grid>
+  </div> 
+
+</ion-content>

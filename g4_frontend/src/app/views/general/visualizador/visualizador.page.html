@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ titulo }}</ion-title>
+    <ion-buttons slot="end"> 
+      <ion-button color="primary" (click)="cerrar()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding">
+  <ion-row>
+    <ion-col>
+      <pdf-viewer [src]="pdfSrc" style="display: block; height: 100vh;"></pdf-viewer>
+    </ion-col>
+  </ion-row>
+</ion-content>

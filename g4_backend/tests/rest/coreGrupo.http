@@ -1,0 +1,9 @@
+### Todos los grupos
+GET http://localhost:3000/coregrupo
+
+### obtener todos
+GET http://localhost:3000/coregrupo/single/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYXBlbGxpZG9zIjoiQURNSU4iLCJub21icmVzIjoiUk9PVCIsIm5pY2tuYW1lIjoiYWRtaW4iLCJjbGF2ZSI6Ikc0c3lzdGVtMjAyMyIsImVzdGFkbyI6MSwiaWRlbXByZXNhIjoxLCJpZGdydXBvIjoxLCJmZWNoYWNyZWFjaW9uIjoiMjAyMy0wNS0yMFQwNTowMDowMC4wMDBaIiwiaWRzb2NpZWRhZCI6MSwiaWF0IjoxNzIyMDI0NjM0LCJleHAiOjE3MjIxMTEwMzR9.Opg2N1mb7sTzWfCx_rSYwLkMwh0T9k-0Vu2_D3j9bHM 
+
+# curl --location 'http://localhost:3000/coregrupo/single/1'

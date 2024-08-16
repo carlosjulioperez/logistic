@@ -1,0 +1,10 @@
+ <!--  [(ngModel)]="objeto.fechadespacho"
+ <ion-datetime (ionChange)="dateTimeUpdated($event)" [value]="params.value" ></ion-datetime>
+ -->
+ <ion-input value="{{ params.value  }}" id="fechacapacitaciondesde" class="ion-text-end"></ion-input>
+ <ion-popover  trigger="fechacapacitaciondesde" size="auto">
+   <ng-template>
+     <ion-datetime locale="es-ES" displayFormat="MMMM D, YYYY" pickerFormat="MMMM D, YYYY"
+      [value]="params.value" presentation="date" (ionChange)="dateTimeUpdated($event)" > </ion-datetime>
+   </ng-template>
+ </ion-popover>

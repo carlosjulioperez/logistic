@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="zoom(-0.1)">
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
+      </ion-button>
+      <ion-button (click)="zoom(0.1)">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ !titulo ? 'Reporte' : titulo }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="cerrarModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>   <!--    [render-text]="true" [zoom]="xzoom" style="display: block;  width: 100%; height: 100%;"     -->
+  <!--<pdf-viewer [src]="pdfSrc" style="display: block; height: 100vh;"></pdf-viewer> --> 
+  <pdf-viewer [src]="pdfSrc"  [render-text]="true"  [zoom]="xzoom" style="display: block;  width: 100%; height: 100%;" ></pdf-viewer>    
+  <!-- <div [innerHTML]="htmldata"></div>    type="application/pdf"   -->
+ <!-- <a [href]="pdfSrc" download="file.pdf">DownloadFile</a>
+  <iframe id="pdf" [src]="pdfSrc" type="application/html" style="display: block;  width: 100%; height: 100%;"   ></iframe>  -->
+
+  <!-- src="/assets/icon/excel.svg"  -->
+  <ion-fab  vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" style="margin-bottom: 20px;" (click)="getReporteExcel()">
+      <ion-icon name="reader" ></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="danger" (click)="download()">
+      <ion-icon name="reader"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

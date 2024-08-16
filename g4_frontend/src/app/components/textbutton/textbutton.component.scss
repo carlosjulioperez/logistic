@@ -1,0 +1,56 @@
+
+.divcard { //checkoutButton
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+}
+
+.divcard2 {  
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+}
+
+.bloqueTag {
+    display: flex;
+    align-items: center;
+    font-size: 14px; //32
+}
+
+.bloqueTag span {
+    color: darkblue;//488dc7 darkblue
+    font-size: 14px; //20
+    //padding: -2px;
+    font-weight: bold;
+}
+
+.button {
+    //position: absolute;
+    //top:50%;
+    background-color:#002ead; //0a0a23  2247e9
+    color: #fff;
+    border:none; 
+    border-radius:5px; //10px
+    //padding:15px;
+    //min-height:30px; 
+    //min-width: 120px;
+    width: 25px !important;
+    height: 25px !important;
+  }
+
+
+.button:hover {
+    background-color:#ffbf00;
+    transition: 0.7s;
+}
+
+
+/*
+.button:active {
+    background-color: #ffbf00;
+}*/
+

@@ -1,0 +1,7 @@
+{
+  "name": "g4_frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

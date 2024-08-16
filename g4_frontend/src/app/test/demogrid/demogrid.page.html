@@ -1,0 +1,42 @@
+ <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Demo Grid</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+   
+
+  <ion-row style="height: 100%;">
+    <ion-col>
+      <ion-item>
+          <ion-button (click)="mostrarCrud()" slot="start"  size="default"   >
+            <ion-icon slot="start" name="create"></ion-icon>
+            Nuevo
+          </ion-button>
+        <ion-searchbar animated debounce="300" placeholder="Digite informacion para filtrar..." (ionChange)="updateFilter($event)" (ionClear)="updateFilter($event)"></ion-searchbar>
+      </ion-item>
+      <div id="container">
+      <ag-grid-angular #agGridOrden
+        style="width: 100%; height: 500px;"
+        class="ag-theme-alpine"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        (cellValueChanged)="onCellValueChanged($event)"
+        (rowEditingStarted)="onRowEditingStarted($event)"
+        (rowEditingStopped)="onRowEditingStopped($event)"
+        (cellEditingStarted)="onCellEditingStarted($event)"
+        (cellEditingStopped)="onCellEditingStopped($event)"
+        (gridReady)="onGridReady($event)"      
+        [pagination]="true">
+      </ag-grid-angular>
+      </div>
+    </ion-col>
+  </ion-row>
+
+ 
+
+</ion-content>

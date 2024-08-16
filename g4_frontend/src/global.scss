@@ -1,0 +1,74 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import '@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+
+
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+ 
+.ag-theme-alpine{
+    //--ag-grid-size: 5px !important;
+    --ag-font-size: 11px;
+    --ag-grid-size: 4px;
+    --ag-list-item-height: 20px;
+}
+
+.ag-cell, .ag-full-width-row .ag-cell-wrapper.ag-row-group {
+    line-height: 1.7 !important;
+}
+
+
+.modal-90 {
+    align-items: center;
+    justify-content: center; 
+    &::part(content){
+        min-width: 90%;
+        min-height: 90%;
+        position: absolute;
+        display: block;
+    }
+}
+
+.modal-pdf {
+    align-items: center;
+    justify-content: center; 
+    &::part(content){
+        min-width: 80%;
+        min-height: 70%;
+        position: absolute;
+        display: block;
+    }
+}
+
+
+.pesca-estado-activa {
+    background-color: #ffffff !important; //399fff
+}
+
+.pesca-estado-anulada {
+    background-color: #ff9898cf !important;
+}

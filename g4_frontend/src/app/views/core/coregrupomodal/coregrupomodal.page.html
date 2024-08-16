@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gestion Grupo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="guardar()">
+        <ion-icon slot="icon-only" name="save"></ion-icon>
+      </ion-button>
+      <!--
+      <ion-button color="primary" (click)="imprimir()">
+        <ion-icon slot="icon-only" name="print"></ion-icon>
+      </ion-button>
+       -->
+      <ion-button color="primary" (click)="cerrarModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card> 
+   <!-- 
+    <ion-row >
+      <ion-col class="ion-no-padding">
+        <ion-item>
+          <ion-label position="floating" >Area Productiva</ion-label>
+          <ion-select interface="popover" placeHolder="Seleccionar"  [(ngModel)]="objeto.idareaproductiva" (ionChange)="onAreaProductivaSelected($event)" >
+            <ion-select-option *ngFor="let item of listAreaProductiva" [value]="item.id" >{{ item.descripcion }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row> -->
+ 
+    <ion-row >
+      <ion-col class="ion-no-padding">
+        <ion-item>
+          <ion-label position="floating" >Nombre</ion-label>
+          <ion-input [(ngModel)]="objeto.nombre"   ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>    
+    <ion-row >
+      <ion-col class="ion-no-padding">
+        <ion-item>
+          <ion-label position="floating" >Descripcion</ion-label>
+          <ion-input [(ngModel)]="objeto.descripcion"  ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+     <!-- <ion-row >
+      <ion-col class="ion-no-padding"  >  
+        <ion-item>
+          <ion-label position="stacked" >Estado Activo</ion-label>
+          <ion-toggle [(ngModel)]="idestadoactivo" (ionChange)="onCheckCambioEstado()" ></ion-toggle> 
+        </ion-item>
+      </ion-col>
+    </ion-row>-->
+  </ion-card>
+
+</ion-content>

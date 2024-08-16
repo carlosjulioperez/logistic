@@ -1,0 +1,117 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="color:darkblue;font-weight: bold;" >Planificacion Aguaje</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  color="secondary" (click)="nuevo()" >
+        <ion-icon slot="start" name="document"></ion-icon>
+        Nuevo
+      </ion-button>  
+      <ion-button   color="primary" (click)="guardar()" >
+        <ion-icon slot="start" name="save"></ion-icon>
+        GUARDAR
+      </ion-button>  
+      <ion-button color="success" (click)="excelExportar()" >
+        <ion-icon slot="start" name="document-text"></ion-icon>
+          EXPORTAR
+      </ion-button>
+     
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true"  >
+
+  <ion-card>
+    <ion-grid>
+      <ion-col size-md="6"  size="6" size-lg="12" >  <!--  size-lg="4" size-md="4" size-sm="6" size="12"    -->
+        <ion-row   >
+          <ion-col class="ion-no-padding" size-sm="10" size-md="4"  size="4" size-lg="4" >
+
+            <ion-card class="headercoreplantilla"  >
+              <ion-card-header>
+                <ion-card-title>Crear Aguaje</ion-card-title>
+              </ion-card-header>
+              <ion-row >
+                <ion-col class="ion-no-padding">
+                  <ion-item>
+                    <ion-label position="floating"  >Año</ion-label>                     
+                    <ion-input  type="number" [(ngModel)]="aguaje.anio"   placeholder="Año"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row >
+                <ion-col class="ion-no-padding">
+                  <ion-item>
+                    <ion-label position="floating" >Número de Aguaje</ion-label>                       
+                    <ion-input [(ngModel)]="aguaje.numeroaguaje" type="number"   placeholder="Número de Aguaje" ></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row >
+                <ion-col class="ion-no-padding">
+                  <ion-item>
+                    <ion-label position="floating" >Fecha de Inicio</ion-label>                       
+                    <ion-input [(ngModel)]="aguaje.fecha_inicio" type="date"   placeholder="Fecha de Inicio"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row >
+                <ion-col class="ion-no-padding">
+                  <ion-item>
+                    <ion-label position="floating" >Fecha Final de Aguaje</ion-label>                       
+                    <ion-input [(ngModel)]="aguaje.fecha_fin" type="date"   placeholder="Fecha Final de Aguaje"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row >
+                <ion-col class="ion-no-padding">
+                  <ion-item>
+                    <ion-label position="floating" >Descripcion</ion-label>                      
+                    <ion-input [(ngModel)]="aguaje.descripcion" type="text"   placeholder="Descripcion"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row >
+                <ion-col class="ion-no-padding">
+                  <ion-item>
+                    <ion-label position="floating" >Observación</ion-label>                       
+                    <ion-input [(ngModel)]="aguaje.observacion" type="text"   placeholder="Observación"  ></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+            </ion-card>
+          </ion-col> <!-- FIN  BLOQUE 1 -->
+          <ion-col class="ion-no-padding" size-sm="10" size-md="8"  size="8" size-lg="8"  >
+            <ion-row style="height: 100%;">
+              <ion-col> 
+                <ion-searchbar animated debounce="300" placeholder="Digite informacion para filtrar..." (ionChange)="updateFilter($event)" (ionClear)="updateFilter($event)"></ion-searchbar>
+                <div id="container">
+                <ag-grid-angular    
+                  style="width: 100%; height: 500px;" 
+                  class="ag-theme-alpine"
+                  [rowData]="rowData"
+                  [columnDefs]="columnDefs"   
+                  [defaultColDef]="defaultColDef"
+                  [pagination]="true"     
+                  [overlayLoadingTemplate]="overlayLoadingTemplate"
+                  [animateRows]="true"
+                  (gridReady)="onGridReady($event)"> 
+          
+                </ag-grid-angular>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-col> <!-- FIN  BLOQUE 2 -->
+        </ion-row>
+      </ion-col>
+    </ion-grid>   
+
+  </ion-card>  
+ 
+ 
+ 
+</ion-content>

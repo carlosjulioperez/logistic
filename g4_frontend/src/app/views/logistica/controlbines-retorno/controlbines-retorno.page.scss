@@ -1,0 +1,207 @@
+
+
+.bannermedio{
+    ion-card-header{
+        padding: 9px;
+        background: rgba(254, 238, 117, 0.833);
+        ion-card-title{
+            font-weight: bold;
+        }
+    }
+}
+
+
+.bannermediocard{
+    .card {
+        --background: yellow !important;
+      }
+}
+
+
+.ag-header-cell-label .ag-header-cell-text {
+    white-space: pre-wrap !important;
+ }
+
+
+
+  
+ion-card {
+    --background: #f8f8f8;  //#d1edf7; //transparent; celeste 1 b4dceb , amarillo  f6c606
+    //--ion-color-base: yellow; //transparent !important;
+}
+
+ion-card-header {
+    --background: darkblue;
+    // padding: 0px;
+} 
+ 
+ion-card-title {
+    --color: white;
+} 
+
+ion-card-subtitle {
+    --color: white;
+}
+
+ion-select {
+    --color: blue;
+}
+
+ion-select-option {
+    --color: red !important ;
+}
+
+.select-text {
+    color: black !important;
+}
+
+ion-input.custom {
+    --background: #373737;
+    --color: #fff;
+    --placeholder-color: #ddd;
+    --placeholder-opacity: 0.8;
+  
+    --padding-bottom: 10px;
+    --padding-end: 10px;
+    --padding-start: 10px;
+    --padding-top: 10px;
+  }
+  
+  ion-input.custom .helper-text,
+  ion-input.custom .counter {
+    color: var(--ion-color-step-700, #373737);
+  }
+
+.divcard { //checkoutButton
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 32px; //el normal estaba en 32px
+}
+
+.divcard1 { //checkoutButton
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px; //el normal estaba en 32px
+}
+
+.divcardtest { //checkoutButton
+    display: flex;
+    //width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px; //el normal estaba en 32px
+}
+
+.divcard2 {  
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;// estaba en 53 px
+}
+
+.bloqueTagIcon {
+    display: flex;
+    align-items: start;
+    font-size: 14px; //32
+    width: 20px;
+}
+
+.bloqueTag {
+    display: flex;
+    align-items: center;
+    font-size: 14px; //32
+}
+
+.bloqueTag span {
+    color: darkblue;//488dc7 darkblue
+    font-size: 14px; //20
+    //padding: -2px;
+    font-weight: bold;
+}
+
+.bloqueTag ion-select {
+    color: black !important;
+}
+
+
+.divgrid { //checkoutButton
+    //display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    height: 35px;
+}
+
+.divgrid ion-grid {
+    font-size: 11px;
+    //font-weight: bold;
+     
+      //--ion-grid-column-padding: 10px;
+      border-collapse: collapse;
+      border-style: hidden;
+      
+      ion-row:first-child {
+        background-color:   darkblue; // celeste 0a8fe7
+        font-weight: bold;
+        color: #FFFFFF;
+        //border-right: 1px solid white;
+        border: 1px solid white;
+      }
+      ion-col {
+        border: 1px solid black;
+        border-bottom: 0;
+        border-right: 0;
+      }
+      ion-col:last-child {
+        border-right: 1px solid black;
+      }
+      
+      ion-row:last-child {
+        border-bottom: 1px solid black;
+      }   
+}
+
+
+/* checkout button*/
+button.preorder {
+    outline: 0;
+    border: 0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-image: linear-gradient(85deg, #61c7ef, #4833fb);
+    color: white;
+}
+
+.preorder p {
+    padding: 8px 17px;
+    border-right: 1px solid rgba(0,0,0,0.4);
+}
+
+.buttonaction {
+    border-left: 1px solid rgba(255,255,255,.2);
+    padding: 5px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.7);
+}
+
+ 
+
+/* animation */
+
+@keyframes updowncontroller{
+  0%  {
+    transform: rotate(-90deg) translate(-56px, 66px);}
+  80%, 100%{
+    transform: rotate(-70deg) translate( 10px, 66px);}
+}
+ 
+

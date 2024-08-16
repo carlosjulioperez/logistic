@@ -1,0 +1,341 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="color:darkblue;font-weight: bold;">Monitoreo de Despacho</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="onAguajeSelected()" [disabled]="!objeto.idaguaje">
+        <ion-icon slot="icon-only" name="refresh"></ion-icon>
+      </ion-button>
+      <ion-button color="success" (click)="excelExportar()" >
+        <ion-icon slot="start" name="document-text"></ion-icon>
+          EXPORTAR
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+        <ion-col class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="4" size-lg="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle style="font-weight: bold;" >Parametros busqueda</ion-card-subtitle>
+            </ion-card-header>
+          
+            <ion-card-content>
+              <div class="divcard">
+                <div class="bloqueTag">
+                  <span>Seleccione No. de Aguaje :</span> 
+                </div>
+                <div class="bloqueTag">
+                  <ion-select interface="popover" placeHolder="Seleccionar" [(ngModel)]="objeto.idaguaje" (ngModelChange)="onAguajeSelected()"  >
+                    <ion-select-option *ngFor="let item of listAguaje" [value]="item.id">{{ item.descripcion }}  No. {{ item.numeroaguaje }}</ion-select-option>
+                  </ion-select>                 
+                </div>
+              </div>
+              <div class="divcard">
+                <div class="bloqueTag">
+                  <span>Fecha de Programacion :</span> 
+                </div>
+                <div class="bloqueTag" >
+                 <!--  
+                  <ion-input value="{{ objeto.fechadespacho | date: 'dd/MM/yyyy' }}" id="fechacapacitaciondesde" class="ion-text-end"></ion-input>
+                  <ion-popover  trigger="fechacapacitaciondesde" size="auto">
+                    <ng-template>
+                      <ion-datetime locale="es-ES" displayFormat="MMMM D, YYYY" pickerFormat="MMMM D, YYYY"
+                       [(ngModel)]="objeto.fechadespacho" presentation="date" > </ion-datetime>
+                    </ng-template>
+                  </ion-popover> -->
+                  <ion-label class="ion-text-wrap" style="font-size: 11px;"  >{{ fechadespachofiltro }} </ion-label>
+                  <ion-button style="margin-left: 10px;"  (click)="buscarFechaDespacho()" size="small" slot="end" fill="outline" color="primary">
+                    <ion-icon slot="icon-only" name="search"></ion-icon>
+                  </ion-button>   
+                </div>
+              </div>
+            </ion-card-content>
+             
+          </ion-card>
+        </ion-col>  
+        <ion-col class="ion-no-padding" size-xs="12" size-sm="10" size-md="6"  size="8" size-lg="8">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle style="font-weight: bold;" >Datos de Empresa</ion-card-subtitle>
+            </ion-card-header>
+          
+            <ion-card-content>
+               
+              <div class="divcard">
+                <div class="bloqueTag">
+                  <span>Empresa :</span> 
+                </div>
+                <div class="bloqueTag">
+                  Falogic S.A   
+                </div>
+              </div>
+              <div class="divcard">
+                <div class="bloqueTag">
+                  <span>Actividad :</span> 
+                </div>
+                LOGISTICA Y TRANSPORTE
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>  
+      </ion-row>
+
+  </ion-grid>
+  <div class="divgrid">
+    <ion-grid class="ion-margin">
+      <ion-row>
+        <ion-col size="1" class="ion-text-center" >Cliente</ion-col>
+        <ion-col size="1.5" class="ion-text-center"   >Camaronera</ion-col> 
+        <ion-col size="1" class="ion-text-center" >Sector</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >Tipo</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >Piscina</ion-col>
+        <ion-col size="0.5" class="ion-text-center"  >Gramaje</ion-col>
+        <ion-col size="1" class="ion-text-center"   >Lib.<br/>Programdas.</ion-col>
+        <!-- <ion-col size="0.5" class="ion-text-center"  >Accion</ion-col> -->
+        <ion-col size="5.5" class="ion-text-center"  >Info.Transporte</ion-col> 
+      </ion-row>
+      <ion-row *ngFor="let item of listDetallePrograma; let ix=index">
+        <ion-col size="1" class="ion-text-center" >{{ item.cliente }}</ion-col>
+        <ion-col size="1.5" class="ion-text-center"   >{{ item.proveedor }}</ion-col> 
+        <ion-col size="1" class="ion-text-center" >{{ item.sector }}</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >{{ item.tipoproceso }}</ion-col>
+        <ion-col size="0.5" class="ion-text-center"   >{{ item.piscina }}</ion-col>
+        <ion-col size="0.5" class="ion-text-center"  >{{ item.gramaje }}</ion-col>
+        <ion-col size="1" class="ion-text-center"   > {{currencyFormatterLabel(item.cantidadprogramada)}}</ion-col>
+        <ion-col size="6" class="ion-text-center" style="overflow-x: auto;" > 
+            <table style="margin: 5px 10px;">
+              <thead>
+                  <tr>
+                      <th width="2%" >Guia</th>
+                      <th width="8%">Biologo</th>
+                      <th width="2%">Transporte</th>
+                      <th width="3%">Conductor</th>
+                      <th width="2%">Cedula</th>
+                      <th width="2%">Telefono</th>
+                      <th width="13%">Prov.Hielo</th>
+                      <th width="2%">Bines</th>
+                      <th width="2%">Libras.Movil</th>
+                      <th width="2%">Solicitada</th>
+                      <th width="2%">Salida</th>
+                      <th width="2%">Llegada a camaronera</th>
+                      <th width="2%">Retorno</th>
+                      <th width="6%">Novedades</th>
+                      <th width="2%">URL</th>
+                      <th width="2%">Usuario</th>
+                      <th width="2%">Clave</th>
+                  </tr>
+              </thead>
+              <tbody *ngFor="let det of item.detallemoviles; let iy= index" >
+                  <tr>
+                      <td>{{det.numeroguia}}</td>
+                      <td>{{det.biologo}}</td>
+                      <td>{{det.transporte}}</td>
+                      <td style="font-size: 9px;">{{det.conductor}}</td>
+                      <td>{{det.cedula}}</td>
+                      <td>{{det.telefono}}</td>
+                      <td>{{det.proveedorhielo}}</td>
+                      <td>{{currencyFormatterLabel(det.bines)}}</td>
+                      <td>{{currencyFormatterLabel(det.cantidadprogramada)}} </td>
+                      <td>
+                        <ion-input value="{{ det.horadespacho | date: 'HH:mm' }}" [id]="'horadespacho'+ix+'_'+iy" class="ion-text-end" 
+                          (ionFocus)="formatoFechaDatetime(det, 'horadespacho')" ></ion-input>
+                        <ion-popover [trigger]="'horadespacho'+ix+'_'+iy" size="auto" >
+                          <ng-template>
+                            <ion-datetime presentation="time" [(ngModel)]="det.horadespacho" (ionChange)="actualizaCampo(det,'horadespacho', $event)" locale="es-ES" hourCycle="h24" [showDefaultButtons]="true" doneText="Aceptar" cancelText="">
+                              <span slot="time-label">Hora</span>
+                            </ion-datetime>
+                          </ng-template>
+                        </ion-popover>
+                      </td>
+                      <td>
+                        <ion-input value="{{ det.horasalidaorigen | date: 'HH:mm' }}" [id]="'horasalidaorigen'+ix+'_'+iy" class="ion-text-end" 
+                          (ionFocus)="formatoFechaDatetime(det, 'horasalidaorigen')" ></ion-input>
+                        <ion-popover [trigger]="'horasalidaorigen'+ix+'_'+iy" size="auto" >
+                          <ng-template>
+                            <ion-datetime presentation="time" [(ngModel)]="det.horasalidaorigen" (ionChange)="actualizaCampo(det,'horasalidaorigen', $event)" locale="es-ES" hourCycle="h24" [showDefaultButtons]="true" doneText="Aceptar" cancelText="">
+                              <span slot="time-label">Hora</span>
+                            </ion-datetime>
+                          </ng-template>
+                        </ion-popover>
+                      </td>
+                      <td>
+                        <ion-input value="{{ det.horaarribocamaronera | date: 'HH:mm' }}" [id]="'horaarribocamaronera'+ix+'_'+iy" class="ion-text-end" 
+                          (ionFocus)="formatoFechaDatetime(det, 'horaarribocamaronera')" ></ion-input>
+                        <ion-popover [trigger]="'horaarribocamaronera'+ix+'_'+iy" size="auto" >
+                          <ng-template>
+                            <ion-datetime presentation="time" [(ngModel)]="det.horaarribocamaronera" (ionChange)="actualizaCampo(det,'horaarribocamaronera', $event)" locale="es-ES" hourCycle="h24" [showDefaultButtons]="true" doneText="Aceptar" cancelText="">
+                              <span slot="time-label">Hora</span>
+                            </ion-datetime>
+                          </ng-template>
+                        </ion-popover>
+                      </td>
+                      <td>
+                        <ion-input value="{{ det.horaretorno | date: 'HH:mm' }}" [id]="'horaretorno'+ix+'_'+iy" class="ion-text-end" 
+                          (ionFocus)="formatoFechaDatetime(det, 'horaretorno')" ></ion-input>
+                        <ion-popover [trigger]="'horaretorno'+ix+'_'+iy" size="auto" >
+                          <ng-template>
+                            <ion-datetime presentation="time" [(ngModel)]="det.horaretorno" (ionChange)="actualizaCampo(det,'horaretorno', $event)" locale="es-ES" hourCycle="h24" [showDefaultButtons]="true" doneText="Aceptar" cancelText="">
+                              <span slot="time-label">Hora</span>
+                            </ion-datetime>
+                          </ng-template>
+                        </ion-popover>
+                      </td>
+                      <td>
+                        <ion-input [(ngModel)]="det.observacion" (ionChange)="actualizaCampo(det,'observacion', $event)"></ion-input>
+                      </td>
+                      <td>{{det.url}}</td>
+                      <td>{{det.usuario}}</td>
+                      <td>{{det.clave}}</td>
+                  </tr>
+                                  
+              </tbody>
+              <tfoot>
+                  <tr>
+                      <th colspan="5">Totales </th>
+                      <th class="text-center">{{currencyFormatterLabel(item.totalbines)}}</th>
+                      <th class="text-center">{{currencyFormatterLabel(item.totalcantidadprogramada)}}</th>
+                  </tr>
+              </tfoot>
+          </table>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div> 
+
+</ion-content>
+
+
+<!-- <ion-grid class="ion-margin">
+  <ion-row *ngFor="let item of listDetallePrograma; let ix=index">
+    <ion-card>
+      <ion-row class="cabecera">
+        <ion-col class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-input label="Cliente" label-placement="stacked" readonly [value]="item.cliente"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-input label="Camaronera" label-placement="stacked" readonly [value]="item.proveedor"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-input label="Sector" label-placement="stacked" readonly [value]="item.sector"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-input label="Tipo" label-placement="stacked" readonly [value]="item.tipoproceso"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="cabecera">
+        <ion-col class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-input label="Piscina" label-placement="stacked" readonly [value]="item.piscina"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-input label="Gramaje" label-placement="stacked" readonly [value]="item.gramaje"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col class="ion-no-padding">
+          <ion-item lines="none">
+            <ion-input label="Lib. Programadas" label-placement="stacked" readonly [value]="currencyFormatterLabel(item.cantidadprogramada)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row style="overflow-x: auto;">
+        <table style="margin: 5px 10px;">
+          <thead>
+              <tr>
+                  <th width="15%">Biologo</th>
+                  <th width="2%">Transporte</th>
+                  <th width="15%">Prov.Hielo</th>
+                  <th width="2%">Bines</th>
+                  <th width="2%">Libras.Movil</th>
+                  <th width="2%">Solicitada</th>
+                  <th width="2%">Salida</th>
+                  <th width="2%">Llegada a camaronera</th>
+                  <th width="2%">Retorno</th>
+                  <th width="10%">Novedades</th>
+              </tr>
+          </thead>
+          <tbody *ngFor="let det of item.detallemoviles; let iy= index" >
+              <tr>
+                  <td>{{det.biologo}}</td>
+                  <td>{{det.transporte}}</td>
+                  <td>{{det.proveedorhielo}}</td>
+                  <td>{{currencyFormatterLabel(det.bines)}}</td>
+                  <td>{{currencyFormatterLabel(det.cantidadprogramada)}} </td>
+                  <td>
+                    <ion-input value="{{ det.horadespacho | date: 'HH:mm' }}" [id]="'horadespacho'+ix+'_'+iy" class="ion-text-end" 
+                      (ionFocus)="formatoFechaDatetime(det, 'horadespacho')" ></ion-input>
+                    <ion-popover [trigger]="'horadespacho'+ix+'_'+iy" size="auto" >
+                      <ng-template>
+                        <ion-datetime presentation="time" [(ngModel)]="det.horadespacho" (ionChange)="actualizaCampo(det,'horadespacho', $event)" locale="es-ES" hourCycle="h24" [showDefaultButtons]="true" doneText="Aceptar" cancelText="">
+                          <span slot="time-label">Hora</span>
+                        </ion-datetime>
+                      </ng-template>
+                    </ion-popover>
+                  </td>
+                  <td>
+                    <ion-input value="{{ det.horasalidaorigen | date: 'HH:mm' }}" [id]="'horasalidaorigen'+ix+'_'+iy" class="ion-text-end" 
+                      (ionFocus)="formatoFechaDatetime(det, 'horasalidaorigen')" ></ion-input>
+                    <ion-popover [trigger]="'horasalidaorigen'+ix+'_'+iy" size="auto" >
+                      <ng-template>
+                        <ion-datetime presentation="time" [(ngModel)]="det.horasalidaorigen" (ionChange)="actualizaCampo(det,'horasalidaorigen', $event)" locale="es-ES" hourCycle="h24" [showDefaultButtons]="true" doneText="Aceptar" cancelText="">
+                          <span slot="time-label">Hora</span>
+                        </ion-datetime>
+                      </ng-template>
+                    </ion-popover>
+                  </td>
+                  <td>
+                    <ion-input value="{{ det.horaarribocamaronera | date: 'HH:mm' }}" [id]="'horaarribocamaronera'+ix+'_'+iy" class="ion-text-end" 
+                      (ionFocus)="formatoFechaDatetime(det, 'horaarribocamaronera')" ></ion-input>
+                    <ion-popover [trigger]="'horaarribocamaronera'+ix+'_'+iy" size="auto" >
+                      <ng-template>
+                        <ion-datetime presentation="time" [(ngModel)]="det.horaarribocamaronera" (ionChange)="actualizaCampo(det,'horaarribocamaronera', $event)" locale="es-ES" hourCycle="h24" [showDefaultButtons]="true" doneText="Aceptar" cancelText="">
+                          <span slot="time-label">Hora</span>
+                        </ion-datetime>
+                      </ng-template>
+                    </ion-popover>
+                  </td>
+                  <td>
+                    <ion-input value="{{ det.horaretorno | date: 'HH:mm' }}" [id]="'horaretorno'+ix+'_'+iy" class="ion-text-end" 
+                      (ionFocus)="formatoFechaDatetime(det, 'horaretorno')" ></ion-input>
+                    <ion-popover [trigger]="'horaretorno'+ix+'_'+iy" size="auto" >
+                      <ng-template>
+                        <ion-datetime presentation="time" [(ngModel)]="det.horaretorno" (ionChange)="actualizaCampo(det,'horaretorno', $event)" locale="es-ES" hourCycle="h24" [showDefaultButtons]="true" doneText="Aceptar" cancelText="">
+                          <span slot="time-label">Hora</span>
+                        </ion-datetime>
+                      </ng-template>
+                    </ion-popover>
+                  </td>
+                  <td>
+                    <ion-input [(ngModel)]="det.observacion" (ionChange)="actualizaCampo(det,'observacion', $event)"></ion-input>
+                  </td>
+              </tr>
+                              
+          </tbody>
+          <tfoot>
+              <tr>
+                  <th colspan="3">Totales </th>
+                  <th class="text-center">{{currencyFormatterLabel(item.totalbines)}}</th>
+                  <th class="text-center">{{currencyFormatterLabel(item.totalcantidadprogramada)}}</th>
+              </tr>
+          </tfoot>
+      </table>
+      </ion-row>
+    </ion-card>
+  </ion-row>
+</ion-grid> -->

@@ -1,0 +1,8 @@
+-rw-r--r--  1 carper  staff       0 Aug 16 01:45 ./cambios.txt
+-rw-r--r--@ 1 carper  staff   39291 Aug 15 13:20 ./g4_frontend/src/app/views/logistica/logisticadespacho/gestiondespacho/gestiondespacho.page.ts
+-rw-r--r--@ 1 carper  staff    6516 Aug 15 13:10 ./g4_frontend/src/app/api/logistica/planificacionprograma.service.ts
+-rw-r--r--@ 1 carper  staff    8038 Aug 15 13:09 ./g4_backend/routes/planificacion/routePlanificacionPrograma.js
+-rw-r--r--@ 1 carper  staff   44084 Aug 15 13:08 ./g4_backend/controller/planificacion/planificacionPrograma.js
+-rw-r--r--@ 1 carper  staff   12273 Aug 15 11:56 ./g4_frontend/src/app/views/logistica/logisticadespacho/logisticadespacho.page.html
+-rw-r--r--@ 1 carper  staff  108379 Aug 15 11:43 ./g4_backend/controller/logistica/logisticaDespachos.js
+-rw-r--r--@ 1 carper  staff    6148 Aug  7 10:33 ./.DS_Store

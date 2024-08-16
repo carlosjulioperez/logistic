@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Asignacion Bines</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+   <div slot="fixed"  class="fixed-box" >
+    <div class="drop-area" #dropzoneA >
+      <b> Piloto </b>
+      {{ladoIzquierdo | json }}
+    </div>
+    <div class="drop-area" #dropzoneB >
+      <b> Copiloto </b>
+      {{ladoDerecho | json}}
+    </div>
+   </div>
+   <div class="item-group" >
+     <ion-card *ngFor="let i of myArray" >
+      <ion-item   >
+        Bin {{i}}
+      </ion-item>
+     </ion-card> 
+   </div>
+
+</ion-content>

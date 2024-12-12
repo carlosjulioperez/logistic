@@ -67,7 +67,8 @@ const routes: Routes = [
   {
     path: 'impresiondocumentos',
     loadChildren: () => import('./views/logistica/impresiondocumentos/impresiondocumentos.module').then( m => m.ImpresiondocumentosPageModule)
-  },  {
+  },
+  {
     path: 'monitoreodespacho',
     loadChildren: () => import('./views/logistica/monitoreodespacho/monitoreodespacho.module').then( m => m.MonitoreodespachoPageModule)
   },
@@ -86,7 +87,11 @@ const routes: Routes = [
   {
     path: 'reportegeneral',
     loadChildren: () => import('./views/logistica/reportegeneral/reportegeneral.module').then( m => m.ReportegeneralPageModule)
+  },  {
+    path: 'impresiondocumentoshie',
+    loadChildren: () => import('./views/logistica/impresiondocumentoshie/impresiondocumentoshie.module').then( m => m.ImpresiondocumentoshiePageModule)
   }
+
 
 ];
 

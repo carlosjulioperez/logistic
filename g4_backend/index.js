@@ -18,6 +18,7 @@ var routePlanificacionAguaje=require('./routes/planificacion/routePlanificacionA
 var routePlanificacionPrograma=require('./routes/planificacion/routePlanificacionPrograma');
 var routeDashboard=require('./routes/dashboard/routeGraficoPlanificacionPrograma');
 var routeLogisticaDespacho=require('./routes/logistica/routeLogisticaDespacho');
+var routeLogisticaDespachoHielo=require('./routes/logistica/routeLogisticaDespachoHielo');
 
 
 app.use(cors())
@@ -41,6 +42,7 @@ app.use('/home',routeDashboard);
 app.use('/planificacionaguaje',routePlanificacionAguaje); 
 app.use('/planificacionprograma',routePlanificacionPrograma); 
 app.use('/logisticadespacho',routeLogisticaDespacho); 
+app.use('/logisticadespachohielo',routeLogisticaDespachoHielo); 
 
 
 // Una vez definidas nuestras rutas podemos iniciar el servidor

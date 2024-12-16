@@ -1,0 +1,1 @@
+select * from planificacion_despacho_hielos_detalle ;

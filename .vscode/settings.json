@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "G4System",
+            "database": "G4System",
+            "username": "postgres",
+            "password": ""
+        }
+    ]
+}

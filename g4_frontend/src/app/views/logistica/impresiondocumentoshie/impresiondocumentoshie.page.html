@@ -18,8 +18,8 @@
       <ion-button color="primary" (click)="onUpdateData()" [disabled]="!objeto.idaguaje">
         <ion-icon slot="icon-only" name="refresh"></ion-icon>
       </ion-button>
-      <ion-button color="danger" (click)="cerrar()">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
+      <ion-button color="danger" (click)="cerrar()" [disabled]="!objeto.idaguaje || !fechadespachofiltro">
+        <ion-icon slot="icon-only" name="remove"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

@@ -57,7 +57,6 @@ export class ImpresiondocumentoshiePage implements OnInit {
         }
       } , width: 90  , pinned: 'left'
     }, */
-
    
     { headerName: 'Gen.', field: 'genera' ,  width: 70  , resizable: true   , pinned: 'left' ,
        editable: false ,
@@ -104,18 +103,10 @@ export class ImpresiondocumentoshiePage implements OnInit {
       } , width: 80  , pinned: 'left'
     }, 
 
-    {headerName: 'Grabar', field: 'Grabar', cellRenderer: ButtonFileComponent, 
-      cellRendererParams:{
-        clicked: (field:any) =>{         
-          // this.grabar(field)
-        }
-      }, width: 80, minWidth: 80
-    },
-    
     {headerName: 'Eliminar', field: 'Eliminar', cellRenderer: ButtonDeleteComponent, 
       cellRendererParams:{
         clicked: (field:any) =>{         
-          // this.eliminar(field)
+          this.deleteDetalle(field)
         }
       }, width: 80, minWidth: 80
     },
@@ -140,12 +131,15 @@ export class ImpresiondocumentoshiePage implements OnInit {
       editable: true ,
       cellRenderer: 'textbuttonRenderer' ,
       cellRendererParams: {
-      onClick: this.asignaConductorDetalle.bind(this),
+      onClick: this.asignaTransporteDetalle.bind(this),
     }, cellEditor: 'textbuttonRenderer'},
 
     { headerName: 'Conductor', field: 'conductor' ,  width: 270  , resizable: true ,  floatingFilter: true , minWidth: 280 ,  cellStyle: {fontSize: '11px'}  , //pinned: 'left' ,
-      editable: false ,
-    },
+      editable: true ,
+      cellRenderer: 'textbuttonRenderer' ,
+      cellRendererParams: {
+      onClick: this.asignaConductorDetalle.bind(this),
+    }, cellEditor: 'textbuttonRenderer'},
     
     { headerName: 'Cant sacos', field: 'cantidadsacos' ,  width: 100  , resizable: true ,  floatingFilter: true ,minWidth: 100 , cellStyle: {fontSize: '11px'}  , //pinned: 'left' ,
       editable: true,
@@ -347,7 +341,6 @@ export class ImpresiondocumentoshiePage implements OnInit {
   }
 
   async agregarNuevoDetalle(){
-
     try {
       await this.presentLoading();
       let idusuario = this.serviceLogisticadespachoHielo.userService.usuario.id;  
@@ -358,15 +351,13 @@ export class ImpresiondocumentoshiePage implements OnInit {
       // console.log(objeto);
       this.serviceLogisticadespachoHielo.postCreateLogisticaDespachoHieloEmpty(objeto).then(async (resp:any) => {
         console.log('respuesta',resp) ;      
-       this.getDatos();            
-     })
-
+      })
+      this.onUpdateData();
     } catch (error:any) {
       this.showMessage(error.error == undefined ? error.message : error.error, "middle", "danger")
     }finally{
       this.closeLoading();
     }
-
   }
 
   onRowEditingStarted(event:any) {
@@ -385,8 +376,21 @@ export class ImpresiondocumentoshiePage implements OnInit {
     console.log('cellEditingStopped event' , event);
   }
 
-  onCellValueChanged(event:any) {
-    console.log('event.column.colId ->' , event.column.colId); 
+  onCellValueChanged(event:any){
+    console.log('event.column.colId ->', event.column.colId); 
+    let objeto = {id: 0 , campo: '', valor: ''};
+    objeto.id = event.data.id;
+    objeto.campo = event.column.colId;
+    objeto.valor = event.newValue;
+    console.log('objeto' , objeto);
+    console.log('event.newValue', event.newValue);
+   
+    const allowedValues = new Set(["numeroguia", "cantidadsacos", "observaciones"]);
+    if (allowedValues.has(event.column.colId)) {
+      this.serviceLogisticadespachoHielo.postUpdateDetalle(objeto).then(async data => {
+        console.log('Campo actualizado ->' , data);
+      });
+    }
   }
   
   async imprimirdocumentoxml(item:any){
@@ -1329,18 +1333,17 @@ export class ImpresiondocumentoshiePage implements OnInit {
           if(!!data){
             //con el ID recuperado del objeto seleccionado en la grid para acceder a sus columnas
             var rowNode:any = this.gridApi.getRowNode((<any>item).rowData.id);
-          
-            console.log('rowNode ->' , rowNode);
-            console.log('rowNode.data->' , rowNode.data);
             rowNode.setDataValue('cliente', (<any>data).etiqueta);
-            console.log(' cliente escogido ->' ,  (<any>data).descripcion);
-            console.log('rowNode.data actualizado->' , rowNode.data);
-            //console.log(' sector escogido ->' ,  (<any>data).descripcion);
-
-            let objeto = {id: 0, idcliente: 0};
-            objeto.id               =   rowNode.data.id; 
-            objeto.idcliente        =   (<any>data).id;  
+          
+            let objeto = {id: 0, campo: '', valor: 0};
+            objeto.id = rowNode.data.id; 
+            objeto.campo = 'idcliente';  
+            objeto.valor = (<any>data).id;  
             console.log('objeto a enviar' , objeto)
+            
+            this.serviceLogisticadespachoHielo.postUpdateDetalle(objeto).then(async data => {
+              console.log('Campo actualizado ->' , data);
+            });
       
             this.gridApi.redrawRows();
           }
@@ -1371,17 +1374,22 @@ export class ImpresiondocumentoshiePage implements OnInit {
             //this.gridApi.redrawRows();              
             let objeto = {id :0 , campo: '' , valor : ''};
             objeto.id =   rowNode.data.id;  
-            // objeto.campo = 'idconductor';  
-            objeto.campo = 'placa';  
+            objeto.campo = 'idconductor';  
+            // objeto.campo = 'placa';  
             objeto.valor = (<any>data).id;
             console.log('objeto' , objeto)
 
-            this.serviceLogisticadespachoHielo.getTransporte (objeto).then(async data2 => {
-              //this.objeto = <any>data2
-              console.log('objeto conductor actualizado->' , data2);
-              rowNode.setDataValue('movil', (<any>data2).placa);
-              this.gridApi.redrawRows();
-            })  
+            this.serviceLogisticadespachoHielo.postUpdateDetalle(objeto).then(async data => {
+              console.log('Campo actualizado ->' , data);
+            });
+            this.gridApi.redrawRows();
+            
+            // this.serviceLogisticadespachoHielo.getTransporte (objeto).then(async data2 => {
+            //   //this.objeto = <any>data2
+            //   console.log('objeto conductor actualizado->' , data2);
+            //   rowNode.setDataValue('movil', (<any>data2).placa);
+            //   this.gridApi.redrawRows();
+            // })  
           }
         })
       })
@@ -1394,4 +1402,67 @@ export class ImpresiondocumentoshiePage implements OnInit {
       this.closeLoading() 
     }  
   }
+
+  async asignaTransporteDetalle(item:any){
+    console.log('item ->' , item );
+    try {
+        await this.presentLoading();
+        // proveedores de hielo son el tipo 2
+        await this.serviceLogisticadespachoHielo.getTransporte().then(async (respuesta:any) => {
+          console.log('lista transporte' , respuesta) 
+          this.closeLoading();
+          await this.mostrarFormularioBusqueda('Lista de Transportes', <any>respuesta, ["placa"]).then(data => {
+            if(!!data){
+              //con el ID recuperado del objeto seleccionado en la grid para acceder a sus columnas
+              var rowNode:any = this.gridApi.getRowNode((<any>item).rowData.id); //idlogisticadespacho
+              rowNode.setDataValue('movil', (<any>data).descripcion);
+              
+              let objeto = {id: 0 , campo: '' , valor : ''};
+              objeto.id =   rowNode.data.id;  
+              objeto.campo = 'idtransporte';  
+              objeto.valor = (<any>data).id;
+              //console.log('objeto' , objeto)
+              //if(event.newValue != ''){
+              this.serviceLogisticadespachoHielo.postUpdateDetalle(objeto).then(async data => {
+                //this.objeto = <any>data
+                console.log('objeto transporte actualizado->' , data);
+                this.gridApi.redrawRows();
+              })  
+            }
+          })
+        })
+
+    } catch (error) {
+      //setTimeout(() => { this.rows2.last.setFocus(); }, 1005);
+      console.log('error es ',error)
+      this.showMessage(error, "middle", "danger",1000)
+    } finally { 
+      this.gridApi.refreshCells();
+      this.closeLoading() 
+    }  
+  }
+
+  async deleteDetalle(item:any){
+    console.log('item ->' , item );
+    try {
+      await this.presentLoading();
+
+      let objeto = {id :0};
+      objeto.id = item.id;
+      console.log('objeto', objeto);
+
+      this.serviceLogisticadespachoHielo.deleteLogisticaDespachoHieloDetalle(objeto).then(async data2 => {
+        console.log('Detalle eliminado ->' , data2);
+      })  
+      this.onUpdateData();
+    }catch (error) {
+      //setTimeout(() => { this.rows2.last.setFocus(); }, 1005);
+      console.log('error es ',error)
+      this.showMessage(error, "middle", "danger",1000)
+    } finally { 
+      this.gridApi.refreshCells();
+      this.closeLoading() 
+    }  
+  }
+
 }

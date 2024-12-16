@@ -129,27 +129,65 @@ class logisticaDespachosHielo{
             throw new Error(error);
         }
     }
+    
+    async getTransporte() {
+        let results = await db.query(`SELECT * 
+                                     FROM tm_transporte where estado = 1 order by descripcion asc`)
+                                     .catch(console.log);
+        return results.rows;
+    }
 
+    // /**
+    //  * Consulta los datos de un transporte
+    //  * se envia el campo dinamicamente dentro del objeto
+    //  * @param {*} objeto 
+    //  * @returns 
+    //  */
+    // async getTransporte(objeto){
+    //     console.log('objeto recb->', objeto);
+    //     try {
+    //         // await db.query(`UPDATE logistica_despacho SET ${objeto.campo}=$2 WHERE idlogisticadespacho=$1 `, 
+    //         let registro = await db.query(`SELECT ${objeto.campo} FROM tm_transporte WHERE id=$1 `, 
+    //             [ objeto.valor ])
+    //         let dato = registro.rows[0];
+    //         console.log('dato ->', dato);
+    //         return dato;      
+    //     } catch (error) {
+    //         console.log(error)
+    //         throw new Error(error)
+    //     } 
+    // }
+    
     /**
-     * Consulta los datos de un transporte
-     * se envia el campo dinamicamente dentro del objeto
+     * Elimina un registro de detalle
      * @param {*} objeto 
      * @returns 
      */
-    async getTransporte(objeto){
+    async deleteLogisticaDespachoHieloDetalle(objeto){
         console.log('objeto recb->', objeto);
         try {
-            // await db.query(`UPDATE logistica_despacho SET ${objeto.campo}=$2 WHERE idlogisticadespacho=$1 `, 
-            let registro = await db.query(`SELECT ${objeto.campo} FROM tm_transporte WHERE id=$1 `, 
-                [ objeto.valor ])
-            let dato = registro.rows[0];
-            console.log('dato ->', dato);
-            return dato;      
+            let registro = await db.query(`DELETE FROM planificacion_despacho_hielos_detalle where id=$1`, 
+                [ objeto.id ])
+            return objeto;      
         } catch (error) {
             console.log(error)
             throw new Error(error)
         } 
     }
+    
+    async updateLogisticaDespachoHieloDetalle(objeto){
+        console.log('objeto recb->', objeto);
+        try {
+            await db.query(`UPDATE planificacion_despacho_hielos_detalle SET ${objeto.campo}=$2 WHERE id=$1 `, 
+                [ objeto.id, objeto.valor ])
+            console.log('objeto ->', objeto);
+            return objeto;      
+        } catch (error) {
+            console.log(error)
+            throw new Error(error)
+        } 
+    }
+
 }
 
 module.exports = logisticaDespachosHielo;

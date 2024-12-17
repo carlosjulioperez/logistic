@@ -175,6 +175,37 @@ class logisticaDespachosHielo{
         } 
     }
     
+    /**
+     * Elimina un registro de cabecera
+     * @param {*} objeto 
+     * @returns 
+     */
+    async deleteLogisticaDespachoHieloCabecera(objeto){
+        try {
+            console.log('objeto recb->', objeto);
+            await db.query('BEGIN');
+
+            await db.query(`DELETE FROM planificacion_despacho_hielos_detalle d
+                            USING planificacion_despacho_hielos_cabecera c
+                            WHERE d.iddespachohielo = c.id
+                            AND c.idaguaje = $1
+                            AND c.fechadespacho = $2`, 
+            [objeto.idaguaje, objeto.fechadespacho])
+
+            await db.query(`DELETE FROM planificacion_despacho_hielos_cabecera  
+               WHERE idaguaje = $1 AND fechadespacho = $2`,
+            [objeto.idaguaje, objeto.fechadespacho])
+            
+            // Commit transaction
+            await db.query('COMMIT');
+            return objeto;      
+        } catch (error) {
+            console.log(error)
+            await db.query('ROLLBACK');
+            throw new Error(error)
+        } 
+    }
+    
     async updateLogisticaDespachoHieloDetalle(objeto){
         console.log('objeto recb->', objeto);
         try {

@@ -25,6 +25,10 @@ export class LogisticadespachohieloService {
   deleteLogisticaDespachoHieloDetalle(objeto:any){
     return this.cliente.post(this.apiweb+'/logisticadespachohielodetalledelete', objeto, {headers:{'Content-Type':'application/json', 'Authorization': this.userService.token}}).toPromise();
   }
+  
+  deleteLogisticaDespachoHieloCabecera(objeto:any){
+    return this.cliente.post(this.apiweb+'/logisticadespachohielocabeceradelete', objeto, {headers:{'Content-Type':'application/json', 'Authorization': this.userService.token}}).toPromise();
+  }
 
   postUpdateDetalle(objeto:any){
     return this.cliente.post(this.apiweb+'/logisticadespachohielodetalleupdate', objeto, {headers:{'Content-Type':'application/json', 'Authorization': this.userService.token}}).toPromise();

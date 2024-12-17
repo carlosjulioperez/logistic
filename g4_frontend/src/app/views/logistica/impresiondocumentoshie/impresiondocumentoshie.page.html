@@ -18,7 +18,7 @@
       <ion-button color="primary" (click)="onUpdateData()" [disabled]="!objeto.idaguaje">
         <ion-icon slot="icon-only" name="refresh"></ion-icon>
       </ion-button>
-      <ion-button color="danger" (click)="cerrar()" [disabled]="!objeto.idaguaje || !fechadespachofiltro">
+      <ion-button color="danger" (click)="eliminarRegistro()" [disabled]="!objeto.idaguaje || !fechadespachofiltro">
         <ion-icon slot="icon-only" name="remove"></ion-icon>
       </ion-button>
     </ion-buttons>

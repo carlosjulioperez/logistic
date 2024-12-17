@@ -229,8 +229,6 @@ export class ImpresiondocumentoshiePage implements OnInit {
 
   }
 
-  
-
   ngOnInit() {
     this.getDatos();
   }
@@ -423,6 +421,29 @@ export class ImpresiondocumentoshiePage implements OnInit {
 
   cerrar(){
     this.modalController.dismiss();
+  }
+
+  eliminarRegistro(){
+    this.presentAlertConfirm('Atencion', 'Seguro que desea eliminar el registro?').then(resp => {
+      if(resp){
+        try {
+          let idusuario = this.serviceLogisticadespachoHielo.userService.usuario.id;  
+          let objeto = {idaguaje:0, fechadespacho:0, idusuario: 0};
+          objeto.idaguaje = this.objeto.idaguaje;  
+          objeto.fechadespacho = this.fechadespachofiltro;
+          objeto.idusuario = idusuario;
+          // console.log(objeto);
+          this.serviceLogisticadespachoHielo.deleteLogisticaDespachoHieloCabecera(objeto).then(async (resp:any) => {
+            console.log('respuesta',resp) ;      
+          })
+          this.onUpdateData();
+        } catch (error:any) {
+          this.showMessage(error.error == undefined ? error.message : error.error, "middle", "danger")
+        }finally{
+          this.closeLoading();
+        }
+      }
+    });
   }
 
   async presentLoading(message='Espere un momento') {

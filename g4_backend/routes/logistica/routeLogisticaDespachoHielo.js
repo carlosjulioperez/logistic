@@ -38,6 +38,14 @@ router.post('/logisticadespachohielodetalledelete', function(req, res, next) {
     })
 })
 
+router.post('/logisticadespachohielocabeceradelete', function(req, res, next) {
+    instance.deleteLogisticaDespachoHieloCabecera(req.body).then(resp => {
+        res.status(200).send(resp)
+    }).catch(err => {
+        res.status(400).send(err.message)
+    })
+})
+
 router.post('/logisticadespachohielodetalleupdate', function(req, res, next) {
     instance.updateLogisticaDespachoHieloDetalle(req.body).then(resp => {
         res.status(200).send(resp)
